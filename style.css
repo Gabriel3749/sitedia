@@ -1,0 +1,253 @@
+/* Reset e configurações globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    overflow: hidden;
+    background-color: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container dos corações animados */
+#hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* ESTA É A CORREÇÃO PRINCIPAL */
+.heart {
+    position: absolute;
+    bottom: -100px;
+    width: 20px;  /* Tamanho base fixo para garantir a proporção */
+    height: 20px; /* Tamanho base fixo para garantir a proporção */
+    background-color: #FFD700;
+    opacity: 0.7;
+    animation: floatUp 10s infinite linear;
+    transform: rotate(-45deg);
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    position: absolute;
+    width: inherit; /* Herda a largura do .heart */
+    height: inherit; /* Herda a altura do .heart */
+    border-radius: 50%;
+    background-color: inherit;
+}
+
+.heart::before {
+    top: -50%;
+    left: 0;
+}
+
+.heart::after {
+    left: 50%;
+    top: 0;
+}
+/* FIM DA CORREÇÃO PRINCIPAL */
+
+/* Animação dos corações subindo */
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(-45deg);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-120vh) rotate(315deg);
+        opacity: 0;
+    }
+}
+
+/* Estilo do container principal */
+.container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    color: #ffc400;
+    margin-bottom: 20px;
+}
+
+.content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/* Estilo do contador */
+/* Estilo do contador (VERSÃO PREMIUM) */
+#timer {
+    background: linear-gradient(145deg, #e6e6e6, #ffc400);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 2px 2px 2px #ffc400, -10px -7px 15px #ffc400;
+    margin-top: 15px;
+}
+
+.timer-title {
+    font-size: 1.3rem;
+    font-weight: 400; /* Peso de fonte mais leve */
+    margin-bottom: 25px;
+    color: #ffffff;
+    letter-spacing: 1px; /* Espaçamento entre letras */
+}
+
+.timer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px; /* Aumenta o espaço entre as caixas */
+}
+
+.timer-box {
+    background: #f0f0f0;
+    padding: 20px 10px;
+    border-radius: 10px;
+    box-shadow: inset 5px 5px 10px #dcdcdc, inset -5px -5px 10px #ffffff;
+    transition: all 0.3s ease-in-out; /* Adiciona uma transição suave */
+}
+
+.timer-box:hover {
+    transform: scale(1.05); /* Efeito de zoom ao passar o mouse */
+    box-shadow: 5px 5px 10px #ffc400, -5px -5px 10px #ffc400;
+}
+
+.timer-box span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #f1bf1a; /* Cor vermelha do título, para criar um tema */
+    display: block;
+    line-height: 1;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Sombra sutil no texto */
+}
+
+.timer-box p {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-top: 10px;
+    letter-spacing: 2px; /* Espaçamento para um look mais "design" */
+}
+
+/* Estilos do Slideshow */
+/* Estilos do Slideshow (COM LEGENDA HOVER) */
+.slideshow-container {
+    max-width: 85%;
+    aspect-ratio: 4 / 3;
+    position: relative;
+    margin: 30px auto;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background-color: #e0e0e0;
+}
+
+/* O container de cada slide agora é um elemento 'pai' */
+.slide {
+    position: absolute; /* Necessário para o slideshow funcionar */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none; /* Escondido por padrão pelo JS */
+    animation: fadeIn 1.5s;
+}
+
+/* A imagem dentro do slide */
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a imagem cubra o espaço */
+}
+
+/* A nova legenda (escondida por padrão) */
+.slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)); /* Gradiente preto semi-transparente */
+    color: white;
+    padding: 40px 20px 20px 20px; /* Espaçamento (mais em cima por causa do gradiente) */
+    text-align: left;
+    
+    /* Animação */
+    opacity: 0; /* Começa invisível */
+    transform: translateY(20px); /* Começa um pouco para baixo */
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Transição suave */
+}
+
+/* Efeito: quando o mouse passa sobre .slide, a .slide-caption aparece */
+.slide:hover .slide-caption {
+    opacity: 1; /* Fica visível */
+    transform: translateY(0); /* Volta para a posição original */
+}
+
+.slide-caption h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.slide-caption p {
+    margin: 5px 0 0 0;
+    font-size: 0.9rem;
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0.4; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0.4; }
+    to { opacity: 1; }
+}
+
+/* Rodapé */
+.footer-text {
+    margin-top: 30px;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .title {
+        font-size: 2.2rem;
+    }
+    .timer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .container {
+        padding: 25px;
+    }
+}
+
